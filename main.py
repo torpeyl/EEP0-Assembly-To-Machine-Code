@@ -16,11 +16,12 @@ while tmp != "exit":
     if tmp != "exit":
         program.append(tmp)
 
-inputMap = {"Ra": "00", "Rb": "01", "Rc": "10", "Rd": "11", "MOV": "000", "ADD": "001", "SUB": "010", "ADC": "011",
+inputMap = {"R0": "00", "R1": "01", "R2": "10", "R3": "11", "MOV": "000", "ADD": "001", "SUB": "010", "ADC": "011",
             "LDR": "100", "STR": "101", "JMP": "1100", "JNE": "1101", "JCS": "1110", "JMI": "1111"}
 
 for i in range(len(program)):
     tmp_li = re.split(" ", program[i])
+    tmp_li[0] = tmp_li[0].upper()
     instruction = inputMap.get(tmp_li[0])
     if tmp_li[0] == "MOV" or tmp_li[0] == "ADD" or tmp_li[0] == "SUB" or tmp_li[0] == "ADC":
         if tmp_li[2][0] == "R":
@@ -33,7 +34,6 @@ for i in range(len(program)):
             instruction += inputMap.get(tmp_li[1])
             instruction += "00"
             instruction += "{0:08b}".format(int(tmp_li[2], 16))
-            # print(instruction)
 
     elif tmp_li[0] == "LDR" or tmp_li[0] == "STR":
         instruction += "0"
@@ -54,4 +54,4 @@ for i in range(len(program)):
         print(machineCode[i])
     else:
         tmp = int(machineCode[i], 2)
-        print("0x" + format(tmp, 'x'))
+        print("0x" + format(tmp, 'x').upper())
